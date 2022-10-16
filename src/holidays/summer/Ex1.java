@@ -1,6 +1,5 @@
-package hw00;
+package holidays.summer;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ex1 {

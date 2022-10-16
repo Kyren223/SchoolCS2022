@@ -1,4 +1,4 @@
-package hw00;
+package holidays.summer;
 
 public class Ex5 {
 

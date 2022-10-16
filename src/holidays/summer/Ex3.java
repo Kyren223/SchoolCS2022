@@ -1,4 +1,4 @@
-package hw00;
+package holidays.summer;
 
 public class Ex3 {
 
@@ -8,14 +8,14 @@ public class Ex3 {
 
     public static String getAcronym(String s) {
         String[] words = s.split(" ");
-        String acronym = "";
+        StringBuilder acronym = new StringBuilder();
 
         for (String word : words) {
             if (word.toCharArray()[0] >= 'A' && word.toCharArray()[0] <= 'Z') {
-                acronym += word.toCharArray()[0];
+                acronym.append(word.toCharArray()[0]);
             }
         }
 
-        return acronym;
+        return acronym.toString();
     }
 }

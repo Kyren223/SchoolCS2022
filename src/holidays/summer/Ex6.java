@@ -1,4 +1,4 @@
-package hw00;
+package holidays.summer;
 
 import java.util.Arrays;
 
