@@ -21,6 +21,15 @@ public class Main {
         int num = new Random().nextInt(MIN, MAX + 1);
         head = insertToSortedLinkedList(head, num);
         System.out.println("Inserting " + num + ": \n" + "[" + head + "]");
+
+        System.out.println("Average: " + getAverage(head));
+
+        // Basically copy paste and refactoring from "int" to "double"
+        // And from "IntNode" to "DoubleNode"
+        DoubleNode dHead = createDoubleLinkedList(SIZE);
+        System.out.println("\nDouble Linked List: \n" + dHead);
+        System.out.println("Average: " + getAverage(dHead));
+
     }
 
     public static void sortLinkedList(IntNode head) {
@@ -98,4 +107,51 @@ public class Main {
 
         return head;
     }
+
+    public static double getAverage(IntNode head) {
+        IntNode curr = head;
+        int sum = 0, counter = 0;
+
+        while (curr != null) {
+            sum += curr.getValue();
+            counter++;
+            curr = curr.getNext();
+        }
+        if (counter == 0) return -1; // Division by zero
+        return (double) sum / counter;
+
+        // Instead of counter a call to getLinkedListLength() is an option
+        // But that'd be slower (iterating the list twice instead of once)
+    }
+
+    public static double getAverage(DoubleNode head) {
+        DoubleNode curr = head;
+        int sum = 0, counter = 0;
+
+        while (curr != null) {
+            sum += curr.getValue();
+            counter++;
+            curr = curr.getNext();
+        }
+        if (counter == 0) return -1; // Division by zero
+        return (double) sum / counter;
+
+        // Instead of counter a call to getLinkedListLength() is an option
+        // But that'd be slower (iterating the list twice instead of once)
+    }
+
+    public static DoubleNode createDoubleLinkedList(int size) {
+        Random random = new Random();
+
+        DoubleNode head = new DoubleNode(random.nextDouble(MIN, MAX + 1));
+        DoubleNode curr = head;
+
+        for (int i = 0; i < size - 1; i++) {
+            curr.setNext(new DoubleNode(random.nextDouble(MIN, MAX + 1)));
+            curr = curr.getNext();
+        }
+
+        return head;
+    }
+
 }
