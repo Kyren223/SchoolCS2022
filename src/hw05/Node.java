@@ -32,7 +32,7 @@ public class Node<T> {
     
     @Override
     public String toString() {
-        String nextString = getNext() != null ? "\n" + getNext().toString() : "";
+        String nextString = getNext() != null ? ", " + getNext().toString() : "";
         return this.getValue().toString() + nextString;
     }
 }
