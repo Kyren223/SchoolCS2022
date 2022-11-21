@@ -4,9 +4,10 @@ import java.util.Random;
 
 public class Main {
     
+    public static final int cSize = 100;
     public static void main(String[] args) {
         
-        Node<Character> cHead = createCharNodes(100);
+        Node<Character> cHead = createCharNodes(cSize);
         System.out.println(cHead);
         System.out.println("Amount zipped: " + zip(cHead));
         System.out.println(cHead);
@@ -51,7 +52,7 @@ public class Main {
         Node<Character> head = new Node<>(getRandomChar());
         Node<Character> curr = head;
         for (int i = 1; i < size; i++) {
-            curr.setNext(new Node<Character>(getRandomChar()));
+            curr.setNext(new Node<>(getRandomChar()));
             curr = curr.getNext();
         } return head;
     }
