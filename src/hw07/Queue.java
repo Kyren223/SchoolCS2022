@@ -14,11 +14,11 @@ public class Queue<T> {
         last = null;
     }
     
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return size == 0;
     }
     
-    void insert(T x) {
+    public void insert(T x) {
         Node<T> insertionNode = new Node<>(x);
         size++;
         if (last == null) {
@@ -30,7 +30,7 @@ public class Queue<T> {
         last = last.getNext();
     }
     
-    T remove() {
+    public T remove() {
         if (isEmpty()) return null;
         Node<T> deletionNode = first;
         first = first.getNext();
@@ -38,7 +38,7 @@ public class Queue<T> {
         return deletionNode.getValue();
     }
     
-    T head() {
+    public T head() {
         if (isEmpty()) return null;
         return first.getValue();
     }
