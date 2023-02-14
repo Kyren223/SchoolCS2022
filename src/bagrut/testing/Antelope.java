@@ -7,6 +7,7 @@ public class Antelope extends Mamal {
     }
     
     public boolean isSame(Antelope other) {
-        return this.weight == other.weight;
+        System.out.println("In Antelope");
+        return (other != null) && (this.weight == other.weight);
     }
 }

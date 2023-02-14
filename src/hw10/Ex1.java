@@ -14,7 +14,7 @@ public class Ex1 {
         printEven(root.getRight());
     }
     
-    public static int printLeavesCount(BinaryNode<Character> root) {
+    public static void printLeavesCount(BinaryNode<Character> root) {
         System.out.println(printLeaves(root));
     }
     public static int printLeaves(BinaryNode<Character> root) {

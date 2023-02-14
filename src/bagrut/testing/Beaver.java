@@ -6,7 +6,9 @@ public class Beaver extends Mamal {
         super(weight);
     }
     
+    @Override
     public boolean isSame(Mamal other) {
-        return (other instanceof Beaver && this.weight == other.weight);
+        System.out.println("In Beaver");
+        return (other != null) && (other instanceof Beaver) && (this.weight == ((Beaver)other).weight);
     }
 }

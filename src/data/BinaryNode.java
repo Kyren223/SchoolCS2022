@@ -40,4 +40,12 @@ public class BinaryNode<T> {
     public void setRight(BinaryNode<T> right) {
         this.right = right;
     }
+    
+    @Override
+    public String toString() {
+        String s = String.valueOf(getData());
+        if (getLeft() != null) s += ", " + getLeft().toString();
+        if (getRight() != null) s += ", " + getRight().toString();
+        return s;
+    }
 }

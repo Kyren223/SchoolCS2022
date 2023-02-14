@@ -8,4 +8,13 @@ public class Mamal {
         this.weight = weight;
     }
     
+    public int getWeight() {
+        return weight;
+    }
+    
+    public boolean isSame(Mamal other) {
+        System.out.println("In Mamal");
+        return this == other;
+    }
+    
 }
