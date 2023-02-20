@@ -11,9 +11,9 @@ public class Ex2 {
     
     public static void main(String[] args) {
         //System.out.println(createTreeWrapper().toString());
-        BinNode<Integer> node = BinTreeUtils.buildRandomTree(30, 0, 10);
+        BinNode<Integer> node = BinTreeUtils.buildRandomTree(10, 1, 11);
         BinTreeCanvas.addTree(node);
-        System.out.println(getNodesAtLevel(node, 0, 3));
+        System.out.println(containsDivisibleByTen(node));
     }
     
     public static BinNode<Integer> createTreeWrapper() {
@@ -84,4 +84,52 @@ public class Ex2 {
         boolean right = areAllEven(root.getRight());
         return left && right && (root.getValue() % 2 == 0);
     }
+    
+    public static boolean containsDivisibleByTen(BinNode<Integer> root) {
+        if (root == null) return false;
+        boolean left = containsDivisibleByTen(root.getLeft());
+        boolean right = containsDivisibleByTen(root.getRight());
+        return left || right || (root.getValue() % 10 == 0);
+    }
+    
+    public static boolean isSumTreeWrapper(BinNode<Integer> root) {
+        return isSumTree(root).isBool();
+    }
+    public static BoolInt isSumTree(BinNode<Integer> root) {
+        if (root == null) return new BoolInt(true, 0);
+        BoolInt left = isSumTree(root.getLeft());
+        BoolInt right = isSumTree(root.getRight());
+        boolean leftAndRight = left.isBool() && right.isBool();
+        int sum = left.getInt() + right.getInt();
+        return new BoolInt(leftAndRight && sum == root.getValue(), sum + root.getValue());
+    }
+    
+    public static boolean isWholesomeTree(BinNode<Integer> root) {
+        if (root == null) return false;
+        if (root.getLeft() == null && root.getRight() == null) return true;
+        boolean left = isWholesomeTree(root.getLeft());
+        boolean right = isWholesomeTree2(root.getRight());
+        return left && right;
+    }
+    
+    public static boolean isWholesomeTree2(BinNode<Integer> root) {
+        if (!root.hasLeft() && !root.hasRight()) return true; // Leaf
+        root.getValue(); // If root is null, throws NPE
+        try {
+            // Catches potential NPE
+            isWholesomeTree2(root.getLeft());
+            isWholesomeTree2(root.getRight());
+        } catch (NullPointerException e) {return false;}
+        return true; // No NPE so it has 2 childs
+    }
+    
+    public static boolean isDownwardTree(BinNode<Integer> root) {
+        if (root.hasLeft() && root.hasRight()) return false;
+        BinNode<Integer> child = root.hasLeft() ? root.getLeft() : root.getRight();
+        if (child == null) return true;
+        int childValue = child.getValue();
+        return root.getValue() > childValue;
+    }
+    
+    
 }
