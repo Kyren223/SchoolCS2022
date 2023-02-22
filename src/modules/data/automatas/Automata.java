@@ -1,5 +1,6 @@
-package modules.data;
+package modules.data.automatas;
 
+import modules.data.connections.Connection;
 import modules.data.exceptions.AutomataException;
 
 import java.util.ArrayList;
@@ -10,30 +11,35 @@ public class Automata {
     public static final String STARTER_STATE = "s";
     public static final String STARTER_STATE_ACCEPTANCE = "S";
 
-    private HashMap<String, List<Connection>> statesConnections;
-    private boolean isFull;
+    protected HashMap<String, List<Connection>> statesConnections;
+    private final boolean isFull;
 
     public Automata(boolean isFull) {
         statesConnections = new HashMap<>();
         this.isFull = isFull; // Requires all input to all connections
     }
 
-    public void addLine(String line) {
-        // "q0->Q1/a" capitalized means acceptance state
+    public void addLine(String line) throws AutomataException {
+        // "q0->Q1/a,b" capitalized means acceptance state
         String[] conditionSep = line.split("/");
         String statesString = conditionSep[0];
         String[] states = statesString.split("->");
+        String[] conditions = conditionSep[1].split(",");
 
-        Connection connection = new Connection(conditionSep[1].toCharArray()[0], states[1]);
         addState(states[0]);
-        addConnection(states[0], connection);
+        addState(states[1]);
+    
+        for (String condition : conditions) {
+            addConnection(states[0], new Connection(condition.toCharArray()[0], states[1]));
+        }
     }
-
-    private void addState(String state) {
+    
+    protected void addState(String state) {
+        if (statesConnections.containsKey(state)) return;
         statesConnections.put(state, new ArrayList<>());
     }
-
-    private void addConnection(String state, Connection connection) {
+    
+    protected void addConnection(String state, Connection connection) {
         if (!statesConnections.containsKey(state)) return;
         statesConnections.get(state).add(connection);
     }
@@ -50,28 +56,31 @@ public class Automata {
         String state = getStarterState();
 
         // For each input
-        for (int i = 0; i < in.length; i++) {
+        for (char c : in) {
             List<Connection> connections = statesConnections.getOrDefault(state, null);
             if (connections == null) throw new AutomataException("State has no connections");
-
-            Connection passed = null;
+        
+            Connection passedConnection = null;
             for (Connection connection : connections) {
-                if (passed != null) throw new AutomataException("Cannot determine path, non-deterministic automata");
-                if (connection.pass(in[i])) passed = connection;
+                boolean passed = connection.pass(c);
+                if (passedConnection != null && passed) {
+                    throw new AutomataException("Cannot determine path, non-deterministic automata");
+                }
+                if (passed) passedConnection = connection;
             }
-
-            if (passed == null) {
+        
+            if (passedConnection == null) {
                 if (isFull) throw new AutomataException("Full automata requires all paths for a given input");
                 else return false; // input doesn't get accepted, no path
             }
-
-            state = passed.getState();
+        
+            state = passedConnection.getState();
             if (!statesConnections.containsKey(state)) throw new AutomataException("State doesn't exist");
         }
         return isAcceptanceState(state);
     }
-
-    private String getStarterState() throws AutomataException {
+    
+    protected String getStarterState() throws AutomataException {
         boolean starter = statesConnections.containsKey(STARTER_STATE);
         boolean starterAcceptance = statesConnections.containsKey(STARTER_STATE_ACCEPTANCE);
         if (starter && starterAcceptance) throw new AutomataException("More than 1 starter state is not allowed");
@@ -79,7 +88,7 @@ public class Automata {
         return starter ? STARTER_STATE : STARTER_STATE_ACCEPTANCE;
     }
 
-    private boolean isAcceptanceState(String state) {
+    protected boolean isAcceptanceState(String state) {
         return state.equals(state.toUpperCase());
     }
 }

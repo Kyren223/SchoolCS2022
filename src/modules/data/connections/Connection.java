@@ -1,8 +1,8 @@
-package modules.data;
+package modules.data.connections;
 
 public class Connection {
-    private char condition;
-    private String toState;
+    protected char condition;
+    protected String toState;
 
     public Connection(char condition, String toState) {
         this.condition = condition;
