@@ -8,11 +8,14 @@ public class Tape {
     
     public Tape(String input) throws TapeException {
         head = new BinNode<>(null, TapeValue.fromEnd(), null);
-        
+        right(); // To account for epsilon
         for (char c : input.toCharArray()) {
-            right();
             write(new TapeValue(c));
+            right();
         }
+        while (!read().isEnd()) {
+            left();
+        } right();
     }
     
     public TapeValue read() {
@@ -24,6 +27,12 @@ public class Tape {
         if (value.isEnd()) throw new TapeException("End symbol is not writable");
         head.setValue(value);
     }
+
+    public void move(Direction dir) throws TapeException {
+        if (dir == Direction.LEFT) left();
+        else if (dir == Direction.RIGHT) right();
+        else throw new TapeException("Invalid direction");
+    }
     
     public void left() throws TapeException {
         if (read().isEnd()) throw new TapeException("Cannot go left, end symbol reached");
@@ -31,11 +40,26 @@ public class Tape {
         head = head.getLeft();
     }
     
-    public void right() {
+    public void right() throws TapeException {
         if (head.getRight() == null) {
             BinNode<TapeValue> rightNode = new BinNode<>(head, TapeValue.fromEmpty(), null);
             head.setRight(rightNode);
         }
         head = head.getRight(); // Can always go right, infinitely
+    }
+
+    @Override
+    public String toString() {
+        return sideString(head.getLeft(), true) +
+                "[=" + head.getValue().getValue() + "=]" +
+                sideString(head.getRight(), false);
+    }
+
+    private String sideString(BinNode<TapeValue> side, boolean isLeft) {
+        if (side == null) return "";
+        BinNode<TapeValue> nextSide = isLeft ? side.getLeft() : side.getRight();
+        String s = "[" + side.getValue().getValue() + "]";
+        return isLeft ?
+                sideString(nextSide, true) + s : s + sideString(nextSide, false);
     }
 }

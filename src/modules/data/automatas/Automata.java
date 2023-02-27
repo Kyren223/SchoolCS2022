@@ -20,7 +20,7 @@ public class Automata {
         this.isFull = isFull; // Requires all input to all connections
     }
 
-    public void addLine(String line) throws AutomataException {
+    public void addLine(String line) throws AutomataException, TapeException {
         // "q0->Q1/a,b" capitalized means acceptance state
         String[] conditionSep = line.split("/");
         String statesString = conditionSep[0];

@@ -18,7 +18,7 @@ public class TConnection extends Connection {
     }
     
     public boolean pass(TapeValue value) {
-        return true;
+        return readValue.getValue().equals(value.getValue());
     }
     
     public Direction getDir() {
