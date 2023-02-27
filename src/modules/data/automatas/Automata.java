@@ -2,6 +2,7 @@ package modules.data.automatas;
 
 import modules.data.connections.Connection;
 import modules.data.exceptions.AutomataException;
+import modules.data.exceptions.TapeException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class Automata {
      * @return true if the final input ended in an acceptance state, false otherwise
      * @throws modules.data.exceptions.AutomataException if there are no, or multiple starter states
      */
-    public boolean run(String input) throws AutomataException {
+    public boolean run(String input) throws AutomataException, TapeException {
         char[] in = input.toCharArray();
         String state = getStarterState();
 

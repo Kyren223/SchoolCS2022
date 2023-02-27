@@ -2,15 +2,17 @@ package modules.data;
 
 import modules.data.exceptions.TapeException;
 import unit4.collectionsLib.BinNode;
-import unit4.collectionsLib.Node;
 
 public class Tape {
     private BinNode<TapeValue> head;
     
-    public Tape(String input) {
-        TapeValue value = new TapeValue(TapeValue.END);
-        head = new BinNode<>(null, value, null);
+    public Tape(String input) throws TapeException {
+        head = new BinNode<>(null, TapeValue.fromEnd(), null);
         
+        for (char c : input.toCharArray()) {
+            right();
+            write(new TapeValue(c));
+        }
     }
     
     public TapeValue read() {
@@ -31,7 +33,8 @@ public class Tape {
     
     public void right() {
         if (head.getRight() == null) {
-            BinNode<TapeValue> rightNode = new BinNode<>(head, new TapeValue(TapeValue.EMPTY), null);
+            BinNode<TapeValue> rightNode = new BinNode<>(head, TapeValue.fromEmpty(), null);
+            head.setRight(rightNode);
         }
         head = head.getRight(); // Can always go right, infinitely
     }

@@ -6,8 +6,20 @@ public class TapeValue {
     public static final String END = "|-";
     private String value;
     
-    public TapeValue(String value) {
+    private TapeValue(String value) {
         this.value = value;
+    }
+    
+    public TapeValue(char value) {
+        this.value = String.valueOf(value);
+    }
+    
+    public static TapeValue fromEnd() {
+        return new TapeValue(END);
+    }
+    
+    public static TapeValue fromEmpty() {
+        return new TapeValue(EMPTY);
     }
     
     public TapeValue() {
