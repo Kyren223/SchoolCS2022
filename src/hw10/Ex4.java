@@ -47,7 +47,7 @@ public class Ex4 {
         return left + right;
     }
     
-    public static BinNode<String> buildIdent(BinNode<String> root) {
+    public static BinNode<String> buildIdent(BinNode<String> root) { 
         if (root == null) return null;
         BinNode<String> nbt = new BinNode<>(root.getValue());
         nbt.setLeft(buildIdent(root.getLeft()));

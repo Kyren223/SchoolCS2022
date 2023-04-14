@@ -3,6 +3,7 @@ package modules.data.automatas;
 import modules.data.Direction;
 import modules.data.Tape;
 import modules.data.TapeValue;
+import modules.data.TuringRunnable;
 import modules.data.automatas.Automata;
 import modules.data.connections.Connection;
 import modules.data.connections.TConnection;
@@ -11,6 +12,7 @@ import modules.data.exceptions.TapeException;
 import modules.data.exceptions.TuringAutomataException;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class TuringAutomata extends Automata {
     
@@ -45,6 +47,11 @@ public class TuringAutomata extends Automata {
 
     public boolean run(String input) throws AutomataException, TapeException {
         return run(new Tape(input));
+    }
+    
+    public boolean run(String input, TuringRunnable runnable) throws TapeException, AutomataException {
+        Tape tape = new Tape(input);
+        return run(tape) && runnable.run(tape);
     }
 
     /**

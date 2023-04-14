@@ -1,5 +1,7 @@
 package modules.hw;
 
+import modules.data.Tape;
+import modules.data.TuringRunnable;
 import modules.data.automatas.Automata;
 import modules.data.automatas.TuringAutomata;
 import modules.data.exceptions.AutomataException;
@@ -66,6 +68,8 @@ public class Example {
             for (String input : inputs) {
                 System.out.println("Input: " + input + " Output: " + automata.run(input));
             }
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
