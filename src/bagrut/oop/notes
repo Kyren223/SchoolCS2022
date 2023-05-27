@@ -1,0 +1,46 @@
+1. When upcasting specifying a cast is unneeded
+Example:
+// B inherits A
+A a = new B();
+// Not A a = (A) new B(); - Unnecessary cast
+
+2. When down-casting specifying a cast is mandatory
+Example:
+// B inherits A
+A a = new B();
+B b = a; // COMPILATION ERROR
+// Correct: B b = (B) a;
+
+3. Methods inherited by interfaces must be implemented
+(Unless default keyword is added and a default implementation exists in the interface class)
+* @Override is not necessary to implement a method, but conventionally recommended
+* If a class inherits from another class who has a method with the same signature,
+    then the interface will use that as implementation
+Example:
+`
+interface IPerform
+{
+    void act();
+    int train();
+}
+class Artist
+{
+    // Some code
+    int train() { // some implementation }
+}
+class Singer extends Artist implements IPerform
+{
+    // Some code
+    void act() { // some implementation }
+    // train must be implemented, and it uses the implementation of Artist
+}
+`
+4. A class first extends then implements, not vise versa
+
+
+
+
+
+
+
+

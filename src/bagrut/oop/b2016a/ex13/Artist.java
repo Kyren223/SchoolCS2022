@@ -1,10 +1,10 @@
 package bagrut.oop.b2016a.ex13;
 
 public class Artist {
-    private String firstName;
+    private String firstName; // Should be protected
     private String secondName;
-    private double salary;
-    protected static int num; // Is it int? is it protected static?
+    private double salary; // Should be protected
+    protected static int num; // Should be public
     
     public Artist(double salary, String name) {
     
@@ -24,5 +24,9 @@ public class Artist {
     
     public void print() {
     
+    }
+    
+    public int train() {
+        return 5;
     }
 }
